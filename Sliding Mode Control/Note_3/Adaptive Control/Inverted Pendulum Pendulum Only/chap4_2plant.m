@@ -32,10 +32,21 @@ g=9.8;
 fai1=(mc+mp)*(I+mp*l^2)/(mp*l);
 fai2=(mc+mp)*g;
 fai3=mp*l;
-
 gx1=fai1*sec(x(1))-fai3*cos(x(1));
-%   微小的扰动dt，其实这个值给大点也能平衡，但是车的位置会移动很大
-dt=2*(rand-0.5);
+
+%   干扰信号这么设置，只是为了让摆晃回原来的位置，不过效果不太好hhh
+persistent n;
+if isempty(n)
+    n=1;
+end
+if t/(2*pi)>n
+    n=n+1;
+end
+if mod(n,2)==1
+    dt=0.2*sin(t);
+else
+    dt=0.2*cos(t);
+end
 sys(1)=x(2);
 sys(2)=1/gx1*(u-dt+fai2*tan(x(1))-fai3*x(2)^2*sin(x(1)));
 function sys=mdlOutputs(t,x,u)

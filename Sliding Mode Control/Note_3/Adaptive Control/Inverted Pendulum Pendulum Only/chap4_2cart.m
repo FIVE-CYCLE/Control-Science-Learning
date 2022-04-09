@@ -15,41 +15,32 @@ function [sys,x0,str,ts]=mdlInitializeSizes
 sizes = simsizes;
 sizes.NumContStates  = 2;
 sizes.NumDiscStates  = 0;
-sizes.NumOutputs     = 5;
-sizes.NumInputs      = 1;
+sizes.NumOutputs     = 2;
+sizes.NumInputs      = 3;
 sizes.DirFeedthrough = 1;
 sizes.NumSampleTimes = 0;
 sys=simsizes(sizes);
-x0=[0.01;0];
+x0=[0.001;0];
 str=[];
 ts=[];
 function sys=mdlDerivatives(t,x,u)
-u=u(1);
 mc=0.5;mp=0.5;
 l=0.3;
 I=1/3*mp*l^2;
 g=9.8;
+
 fai1=(mc+mp)*(I+mp*l^2)/(mp*l);
 fai2=(mc+mp)*g;
 fai3=mp*l;
 
-gx1=fai1*sec(x(1))-fai3*cos(x(1));
-%   微小的扰动dt，其实这个值给大点也能平衡，但是车的位置会移动很大
-dt=2*(rand-0.5);
+thd=u(1);
+dthd=u(2);
+F=u(3)
+gx1=fai1*sec(thd)-fai3*cos(thd);
+
+ddthd=1/gx1*(F+fai2*tan(u(1))-fai3*u(2)^2*sin(u(1)))
 sys(1)=x(2);
-sys(2)=1/gx1*(u-dt+fai2*tan(x(1))-fai3*x(2)^2*sin(x(1)));
+sys(2)=sec(thd)/(mp*l)*(mp*g*l*sin(thd)-(I+mp*l^2)*ddthd);
 function sys=mdlOutputs(t,x,u)
-mc=0.5;mp=0.5;
-l=0.3;
-I=1/3*mp*l^2;
-g=9.8;
-
-fai1=(mc+mp)*(I+mp*l^2)/(mp*l);
-fai2=(mc+mp)*g;
-fai3=mp*l;
-
 sys(1)=x(1);
 sys(2)=x(2);
-sys(3)=fai1;
-sys(4)=fai2;
-sys(5)=fai3;

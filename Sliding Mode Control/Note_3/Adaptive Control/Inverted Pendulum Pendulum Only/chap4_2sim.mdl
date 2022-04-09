@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.824"
+    ComputedModelVersion    "1.825"
     NumModelReferences	    0
     NumTestPointedSignals   2
     TestPointedSignal {
@@ -90,8 +90,8 @@ Model {
 	LoadSaveID		"0"
 	Extents			[1242.0, 494.0]
 	ZoomFactor		[1.0]
-	Offset			[-39.219733656173617, -80.9102379115213]
-	SceneRectInView		[-39.219733656173617, -80.9102379115213, 1242.0, 494.0]
+	Offset			[-11.969733656173617, -120.57690457818799]
+	SceneRectInView		[-11.969733656173617, -120.57690457818799, 1242.0, 494.0]
       }
       Object {
 	$PropName		"DockComponentsInfo"
@@ -129,9 +129,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "FIVE-CYCLE"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Sat Apr 09 21:25:04 2022"
-  RTWModifiedTimeStamp	  571440127
-  ModelVersionFormat	  "1.%<AutoIncrement:824>"
+  LastModifiedDate	  "Sat Apr 09 22:37:47 2022"
+  RTWModifiedTimeStamp	  571444658
+  ModelVersionFormat	  "1.%<AutoIncrement:825>"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
   LibraryLinkDisplay	  "none"
@@ -1347,7 +1347,6 @@ Model {
       DisplayOption	      "bar"
       Port {
 	PortNumber		1
-	DataLogging		on
       }
     }
     Block {
@@ -1364,7 +1363,7 @@ Model {
       BlockType		      Constant
       Name		      "Reference"
       SID		      "47"
-      Position		      [675, 0, 725, 20]
+      Position		      [665, -50, 715, -30]
       ZOrder		      102
       Value		      "-0.29507"
     }
@@ -1487,7 +1486,7 @@ Model {
       Name		      "摆杆角度变化"
       SID		      "81"
       Ports		      [1]
-      Position		      [925, -55, 980, -5]
+      Position		      [925, -85, 980, -35]
       ZOrder		      126
       RequestExecContextInheritance off
       Object {
@@ -1856,10 +1855,16 @@ Model {
       ZOrder		      59
       SrcBlock		      "Reference"
       SrcPort		      1
-      Points		      [8, 0]
+      Points		      [18, 0]
+      Branch {
+	ZOrder			137
+	Points			[0, 50]
+	DstBlock		"Mux6"
+	DstPort			1
+      }
       Branch {
 	ZOrder			97
-	Points			[0, -50; 21, 0]
+	Points			[21, 0]
 	Branch {
 	  ZOrder		  99
 	  Points		  [0, 10]
@@ -1871,11 +1876,6 @@ Model {
 	  DstBlock		  "Mux8"
 	  DstPort		  1
 	}
-      }
-      Branch {
-	ZOrder			96
-	DstBlock		"Mux6"
-	DstPort			1
       }
     }
     Line {
@@ -1907,6 +1907,7 @@ Model {
       ZOrder		      102
       SrcBlock		      "Mux8"
       SrcPort		      1
+      Points		      [40, 0; 0, -30]
       DstBlock		      "摆杆角度变化"
       DstPort		      1
     }
